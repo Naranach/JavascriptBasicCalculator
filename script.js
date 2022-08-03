@@ -1,19 +1,28 @@
 
 const display=document.querySelector('.calculator-input')
+const previous=document.querySelector('.calculator-previousinput')
 const keys=document.querySelector('.calculator-keys')
 const delbtn=document.querySelector('.back')
 
 window.addEventListener('keydown', handleKeyboardInput)
-let displayValue='0';
+let displayValue="0"
 let firstValue=null;
 let operator=null;
 let waitingForSecondValue=false;
+let previousValue=""
 
 
 updateDisplay();
 
 function updateDisplay(){
-    display.value=displayValue;
+    display.value=displayValue
+
+    
+    
+    
+    
+
+    
 }
 keys.addEventListener('click',function(e){
     const element=e.target;
@@ -23,6 +32,7 @@ keys.addEventListener('click',function(e){
     if(element.classList.contains('operator')){
     handleOperator(element.value);
     updateDisplay()
+    
     return;
 }
     if(element.classList.contains('decimal')){
@@ -47,6 +57,23 @@ updateDisplay();
 
 function handleOperator(nextOperator){
 const value=parseFloat(displayValue);
+if(nextOperator==="+"){
+    previous.value= displayValue+nextOperator
+    console.log("this")
+    }
+    if(nextOperator==="-"){
+        previous.value= displayValue+nextOperator
+        }
+        if(nextOperator==="/"){
+            previous.value= displayValue+nextOperator
+            }
+            if(nextOperator==="*"){
+                previous.value= displayValue+nextOperator
+                }
+    if(nextOperator==="="&&operator!=null && operator!="="){
+        previous.value= (firstValue+operator+displayValue+"=")
+    }
+
 if(operator&&waitingForSecondValue){
     operator=nextOperator
     return;
@@ -55,15 +82,21 @@ if(operator&&waitingForSecondValue){
 if(firstValue===null){
     firstValue=value;
 }else if(operator){
+    console.log(firstValue+"bu first value"+value)
     const result= add(firstValue,value,operator);
-    displayValue= String(result.toFixed(3));
-    firstValue= result;
-
+    previous.value=result
+    displayValue= Math.round(result*1000)/1000;
+    firstValue= result
+    // console.log("yeni first"+firstValue+" result ise"+result)
+    
 }
+
+
 
 waitingForSecondValue=true;
 operator=nextOperator;
-console.log(displayValue,firstValue,operator,waitingForSecondValue)
+
+console.log(displayValue,operator,firstValue,waitingForSecondValue)
 }
 
 
@@ -73,21 +106,24 @@ function inputNumber(number){
         waitingForSecondValue=false
     } else {
         displayValue = displayValue==='0'? number: displayValue + number;
+        
     }
-    console.log(displayValue,firstValue,operator,waitingForSecondValue)
+    
+        console.log(displayValue,operator,firstValue,waitingForSecondValue)
 }
 
 function inputDecimal(){
-    if(!displayValue.includes('.')){
+    if(!displayValue.includes('.')) {
     displayValue+='.';
     }
 }
 
 function clear(){
-    displayValue='0';
+    displayValue='';
     firstValue=null;
     operator=null;
     waitingForSecondValue=false;
+    previous.value=""
 
 }
 
@@ -103,7 +139,9 @@ return first + second;
 } else if (operator==='←'){
     return displayValue=displayValue.toString().slice(0,-1)
 }
+
 return second;
+
 }
 
 function back(){
@@ -120,6 +158,7 @@ function handleKeyboardInput(e) {
     if (e.key ==='*')handleOperator("*")
     if (e.key ==='Enter')handleOperator("=")
     if (e.key ==='Escape')clear()
+    if (e.key ===',')inputDecimal()
 
     
     
@@ -127,3 +166,4 @@ function handleKeyboardInput(e) {
 
     updateDisplay()
 }
+
