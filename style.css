@@ -74,3 +74,29 @@ button:hover{
     text-align: right;
     padding-left: 20px; padding-right: 20px;
 }
+.icon {
+    background: url('icon.ico');
+    height: 32px;
+    width: 32px;
+    display: block;
+    /* Other styles here */
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 28px;
+  }
+  .icon {
+    background: url('icon.ico');
+    height: 32px;
+    width: 32px;
+    display: block;
+    /* Other styles here */
+}
